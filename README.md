@@ -1,45 +1,73 @@
 # OpenSSH Server
 
-## Introdução
+O SSH (Secure SHell) é um protocolo amplamente utilizado para acesso remoto seguro a sistemas Unix-like, permitindo a execução de comandos e a transferência de arquivos de forma segura.
 
-SSH ("Secure SHell") é um protocolo para acessar com segurança um computador a partir de outro, executar programas e transferir arquivos.
+## Visão Geral 
+
+O OpenSSH Server é uma implementação do protocolo SSH que permite aos usuários acessar e gerenciar remotamente computadores de forma segura. Neste guia, abordaremos como instalar e configurar o OpenSSH Server em um ambiente Ubuntu, bem como como utilizar chaves SSH para autenticação segura entre hosts.
+
+## Requisitos
+
+Antes de prosseguir, certifique-se de ter:
+
+* Um sistema Ubuntu instalado.
+* Acesso ao terminal com permissões de superusuário.
+
+## Instruções
+
+1. [Instalação](#instalação)
+2. [Chaves SSH](#chaves-ssh)
+3. [Conclusão](#conclusão)
 
 ## Instalação
 
-A instalação das aplicações cliente e servidor OpenSSH é simples. Para instalar os aplicativos OpenSSH Client em seu sistema Ubuntu, use este comando em um terminal:
+A instalação do cliente e do servidor OpenSSH é simples. Execute os seguintes comandos em um terminal:
 
 ```
 sudo apt install openssh-client
-```
-Para instalar a aplicação OpenSSH Server e os arquivos de suporte relacionado, use este comando em um terminal:
-
-```
 sudo apt install openssh-server
 ```
+
 ## Chaves SSH
 
-Permite autenticação entre dois hosts sem a necessidade de senha. A autenticação de chave SSH usa *chave privada* e uma *chave pública*.
-
-Para gerar as chaves, em um terminal digite:
+As chaves SSH permitem autenticação entre dois hosts sem a necessidade de senha. Para gerar as chaves, execute o seguinte comando:
 
 ```
 ssh-keygen -t rsa
 ```
-Isso irá gerar as chaves usando o *algoritimo RSA*. Você pode modificar o número de bits usando a opção `-b`. Por exemplo, para gerar chaves com 4096 bits, você pode fazer:
+
+Isso irá gerar as chaves usando o algoritmo RSA. Você pode modificar o número de bits usando a opção -b. Por exemplo, para gerar chaves com 4096 bits, você pode executar:
 
 ```
 ssh-keygen -t rsa -b 4096
 ```
-Durante o processo será solicitada uma senha. Basta pressionar *Enter* quando solicitado a criar a chave.  
 
-Por padrão, a chave *pública* é salva no arquivo `~/.ssh/id_rsa.pub`, enquanto `~/.ssh/id_rsa` é a chave *privada*. Agora copie o arquivo `id_rsa.pub` para o host remoto e anexe-o `~/.ssh/authorized_keys` digitando:
+Isso irá gerar as chaves usando o algoritmo RSA. Durante o processo, será solicitada uma senha. Basta pressionar Enter quando solicitado a criar a chave. Por padrão, a chave pública é salva no arquivo `~/.ssh/id_rsa.pub`, enquanto `~/.ssh/id_rsa` é a chave privada.
+
+Copie o arquivo `id_rsa.pub` para o host remoto e anexe-o ao arquivo `~/.ssh/authorized_keys`:
 
 ```
 ssh-copy-id username@hostremoto
 ```
-Finalmente, verifique as permissões no arquivo `authorized_keys`, apenas o usuário autenticado deve ter permissões de leitura e gravação. Se as permissões não estiverem corretas, altere-as:
+
+Por fim, verifique as permissões no arquivo authorized_keys e ajuste-as, se necessário:
 
 ```
 chmod 600 .ssh/authorized_keys
 ```
-Agora você deve conseguir fazer SSH para o host sem ser solicitada uma senha.
+
+## Conclusão
+
+Parabéns! Você configurou com sucesso o OpenSSH Server em seu sistema Ubuntu, permitindo acesso remoto seguro. Se necessário, consulte a documentação oficial para obter mais informações sobre como utilizar o OpenSSH Server.
+
+## Contribuição
+
+Se você tiver sugestões de melhorias ou correções para este guia, sinta-se à vontade para enviar uma pull request.
+
+## Referências
+
+* [Documentação oficial do Ubuntu sobre o serviço OpenSSH](https://ubuntu.com/server/docs/service-openssh)
+
+## Licença
+
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
